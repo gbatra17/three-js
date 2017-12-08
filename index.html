@@ -20,26 +20,34 @@
 	<script src="js/three.js"></script>
 	<script>
 		var scene = new THREE.Scene();
-		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+		var camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 		var renderer = new THREE.WebGLRenderer();
 		renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.setClearColor(0xA2C4C9);
+
 		document.body.appendChild(renderer.domElement);
 
-		var geometry = new THREE.BoxGeometry(1, 1, 1);
+		var geometry = new THREE.Geometry();
+		geometry.vertices.push(
+			new THREE.Vector3(-10, 10, 0),
+			new THREE.Vector3(-10, -10, 0),
+			new THREE.Vector3(10, -10, 0)
+		);
+		geometry.faces.push(new THREE.Face3(0, 1, 2));
 		var material = new THREE.MeshBasicMaterial({
-			color: 0x00ff00
+			color: 0xF9CB9C
 		});
-		var cube = new THREE.Mesh(geometry, material);
-		scene.add(cube);
+		var triangle = new THREE.Mesh(geometry, material);
+		scene.add(triangle);
 
-		camera.position.z = 5;
+		camera.position.z = 50;
 
 		function animate() {
 			requestAnimationFrame(animate);
 
-			cube.rotation.x += 0.1;
-			cube.rotation.y += 0.1;
+			triangle.rotation.x += 0.02;
+			triangle.rotation.y += 0.02;
 
 			renderer.render(scene, camera);
 		}
