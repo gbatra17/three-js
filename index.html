@@ -35,12 +35,40 @@
 		var cube = new THREE.Mesh(geometry, material);
 		scene.add(cube);
 
-		var geometry = new THREE.TorusKnotGeometry( 10, 3, 100, 16, 2, 3 );
-		var material = new THREE.MeshBasicMaterial( { color: 0xD9D2EA } );
-		var torusKnot = new THREE.Mesh( geometry, material );
-		scene.add( torusKnot );
+		var geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16, 2, 3);
+		var material = new THREE.MeshBasicMaterial({
+			color: 0xD9D2EA
+		});
+		var torusKnot = new THREE.Mesh(geometry, material);
+		scene.add(torusKnot);
 
-		camera.position.z = 30;
+		camera.position.z = 50;
+
+		var length = 12,
+			width = 8;
+
+		var shape = new THREE.Shape();
+		shape.moveTo(0, 0);
+		shape.lineTo(0, width);
+		shape.lineTo(length, width);
+		shape.lineTo(length, 0);
+		shape.lineTo(0, 0);
+
+		var extrudeSettings = {
+			steps: 2,
+			amount: 16,
+			bevelEnabled: true,
+			bevelThickness: 1,
+			bevelSize: 1,
+			bevelSegments: 1
+		};
+
+		var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+		var material = new THREE.MeshBasicMaterial({
+			color: 0x00ff00
+		});
+		var mesh = new THREE.Mesh(geometry, material);
+		scene.add(mesh);
 
 		function animate() {
 			requestAnimationFrame(animate);
@@ -50,6 +78,9 @@
 
 			torusKnot.rotation.x += 0.05;
 			torusKnot.rotation.y += 0.05;
+
+			mesh.rotation.x += 0.05;
+			mesh.rotation.y += 0.05;
 			renderer.render(scene, camera);
 		}
 		animate();
